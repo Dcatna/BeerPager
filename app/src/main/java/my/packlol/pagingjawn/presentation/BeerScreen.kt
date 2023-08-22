@@ -13,14 +13,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import my.packlol.pagingjawn.domain.Beer
+import my.packlol.pagingjawn.navigation.Screen
 
 @Composable
 fun BeerScreen(
-    beers : LazyPagingItems<Beer>
+    beers : LazyPagingItems<Beer>,
+    viewModel: BeerVM,
+    nav : (Screen) -> Unit
 ) {
 
     //errors ina toast

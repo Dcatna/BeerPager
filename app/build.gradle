@@ -49,6 +49,7 @@ android {
 }
 
 dependencies {
+    def nav_version = "2.7.0"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
@@ -88,4 +89,7 @@ dependencies {
     implementation "androidx.room:room-ktx:2.5.1"
     kapt "androidx.room:room-compiler:2.5.1"
     implementation "androidx.room:room-paging:2.5.1"
+
+    //Nav
+    implementation("androidx.navigation:navigation-compose:$nav_version")
 }
