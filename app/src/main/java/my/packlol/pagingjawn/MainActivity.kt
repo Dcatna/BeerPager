@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import dagger.hilt.android.AndroidEntryPoint
+import my.packlol.pagingjawn.navigation.Navigation
 import my.packlol.pagingjawn.presentation.BeerScreen
 import my.packlol.pagingjawn.presentation.BeerVM
 import my.packlol.pagingjawn.ui.theme.PagingJawnTheme
@@ -27,8 +28,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val viewModel = hiltViewModel<BeerVM>()
                     val beers = viewModel.beerPagingFlow.collectAsLazyPagingItems()
-                    BeerScreen(
-                        beers = beers)
+                    Navigation(viewModel)
                 }
             }
         }

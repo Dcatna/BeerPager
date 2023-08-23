@@ -36,8 +36,6 @@ fun Navigation(viewModel : BeerVM){
 
 }
 
-
-
 fun NavGraphBuilder.fadeComposable(
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),
