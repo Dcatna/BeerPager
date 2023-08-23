@@ -45,6 +45,12 @@ object AppModule {
             .create()
     }
 
+    @Provides
+    @Singleton
+    fun provideFavDatabase(){
+
+    }
+
     @OptIn(ExperimentalPagingApi::class)
     @Provides
     @Singleton
