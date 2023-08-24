@@ -1,14 +1,9 @@
-package my.packlol.pagingjawn.local
+package my.packlol.pagingjawn.domain
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import my.packlol.pagingjawn.domain.Beer
-import org.jetbrains.annotations.NotNull
 
-@Entity
-data class Favs(
-    @PrimaryKey
+data class SavableBeer(
     val id : Int,
     val name : String,
     val tagline : String,
@@ -16,5 +11,4 @@ data class Favs(
     val firstBrewed : String,
     val imageUrl : String? = "",
     val saved : Boolean = false
-
 )

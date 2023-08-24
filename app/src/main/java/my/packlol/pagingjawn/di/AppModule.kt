@@ -12,13 +12,15 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import my.packlol.pagingjawn.data.remote.BeerApi
 import my.packlol.pagingjawn.data.remote.BeerRemoteMediator
+import my.packlol.pagingjawn.local.BeerDao
 import my.packlol.pagingjawn.local.BeerDatabse
 import my.packlol.pagingjawn.local.BeerEntity
+import my.packlol.pagingjawn.local.FavoritesDao
+import my.packlol.pagingjawn.local.Favs
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import javax.inject.Singleton
-
 
 
 @Module
@@ -45,10 +47,10 @@ object AppModule {
             .create()
     }
 
-    @Provides
     @Singleton
-    fun provideFavDatabase(){
-
+    @Provides
+    fun provideFavDao(beerdb : BeerDatabse) : FavoritesDao {
+        return beerdb.favdao
     }
 
     @OptIn(ExperimentalPagingApi::class)

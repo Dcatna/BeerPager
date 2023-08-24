@@ -18,11 +18,12 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import my.packlol.pagingjawn.domain.Beer
+import my.packlol.pagingjawn.domain.SavableBeer
 import my.packlol.pagingjawn.navigation.Screen
 
 @Composable
 fun BeerScreen(
-    beers : LazyPagingItems<Beer>,
+    beers : LazyPagingItems<SavableBeer>,
     viewModel: BeerVM,
     nav : (Screen) -> Unit
 ) {

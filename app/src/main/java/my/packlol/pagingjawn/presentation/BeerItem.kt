@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -23,10 +25,12 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import my.packlol.pagingjawn.domain.Beer
+import my.packlol.pagingjawn.domain.SavableBeer
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun BeerItem(
-    beer : Beer,
+    beer : SavableBeer,
     modifier : Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -42,11 +46,16 @@ fun BeerItem(
         ) {
             AsyncImage(
 
-                model = ImageRequest.Builder(context).data(beer.image_url).crossfade(true).build(),
+                model = ImageRequest.Builder(context).data(beer.imageUrl).crossfade(true).build(),
                 contentDescription = beer.name,
                 modifier = Modifier
                     .weight(1f)
                     .height(150.dp))
+
+            Button(
+                onClick = { /*TODO*/ }) {
+
+            }
             Spacer(modifier = Modifier.width(16.dp))
 
             Column(
@@ -74,7 +83,7 @@ fun BeerItem(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "First Brewed In:" + beer.first_brewed,
+                    text = "First Brewed In:" + beer.firstBrewed,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.End,
                     fontSize = 8.sp)

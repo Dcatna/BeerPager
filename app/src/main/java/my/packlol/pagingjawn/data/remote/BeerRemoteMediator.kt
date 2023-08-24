@@ -7,6 +7,7 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import my.packlol.pagingjawn.local.BeerDatabse
 import my.packlol.pagingjawn.local.BeerEntity
+import my.packlol.pagingjawn.local.Favs
 import my.packlol.pagingjawn.mappers.toBeerEntity
 import retrofit2.HttpException
 import java.io.IOException
@@ -49,7 +50,10 @@ class BeerRemoteMediator(
                 if(loadType== LoadType.REFRESH){
                     beerDb.dao.clearAll()
                 }
+
                 val beerEntities = beers.map{it.toBeerEntity()}
+
+
                 beerDb.dao.upsertAll(beerEntities)
             }
 

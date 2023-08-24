@@ -12,10 +12,10 @@ import my.packlol.pagingjawn.domain.Beer
 @Dao
 interface FavoritesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertBeer(beer : Beer)
+    suspend fun insertBeer(beer : Favs)
 
     @Delete
-    suspend fun deleteBeer(beer: Beer)
+    suspend fun deleteBeer(beer: Favs)
 
     @Query("Select * FROM Favs")
     fun observeAll(): Flow<List<Favs>>
