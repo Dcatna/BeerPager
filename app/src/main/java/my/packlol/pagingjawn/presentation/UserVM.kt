@@ -1,19 +1,23 @@
 package my.packlol.pagingjawn.presentation
 
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import my.packlol.pagingjawn.domain.Beer
-import my.packlol.pagingjawn.domain.SavableBeer
+import my.packlol.pagingjawn.local.BeerDao
 import my.packlol.pagingjawn.local.FavoritesDao
 import my.packlol.pagingjawn.local.Favs
+import my.packlol.pagingjawn.mappers.toFav
+import javax.inject.Inject
 
-class UserVM(val dao : FavoritesDao) : ViewModel() {
+@HiltViewModel
+class UserVM @Inject constructor(
+    private val dao : FavoritesDao,
+    private val unsavedDao : BeerDao) : ViewModel() {
 
     val favsList = dao.observeAll()
         .stateIn(
@@ -22,13 +26,13 @@ class UserVM(val dao : FavoritesDao) : ViewModel() {
             emptyList()
     )
 
-    fun insert(beer: Favs){
+
+    fun save(id : Int){
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                dao.insertBeer(beer)
+                dao.insertBeer(unsavedDao.getById(id).toFav())
+
             }
-
-
         }
     }
 }

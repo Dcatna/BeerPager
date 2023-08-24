@@ -14,7 +14,6 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -24,12 +23,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import my.packlol.pagingjawn.domain.Beer
 import my.packlol.pagingjawn.domain.SavableBeer
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun BeerItem(
+    onSaveClick : (Int) -> Unit,
     beer : SavableBeer,
     modifier : Modifier = Modifier
 ) {
@@ -52,10 +50,6 @@ fun BeerItem(
                     .weight(1f)
                     .height(150.dp))
 
-            Button(
-                onClick = { /*TODO*/ }) {
-
-            }
             Spacer(modifier = Modifier.width(16.dp))
 
             Column(
@@ -63,6 +57,13 @@ fun BeerItem(
                     .weight(3f),
                 verticalArrangement = Arrangement.Center
             ) {
+                Button(
+                    onClick = {
+                        onSaveClick(beer.id)
+
+                    }){
+                }
+
                 Text(
                     text = beer.name,
                     style = MaterialTheme.typography.h6,

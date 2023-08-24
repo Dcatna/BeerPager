@@ -14,21 +14,29 @@ import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import my.packlol.pagingjawn.presentation.BeerScreen
 import my.packlol.pagingjawn.presentation.BeerVM
+import my.packlol.pagingjawn.presentation.FavoritesScreen
 import my.packlol.pagingjawn.presentation.LoginScreen
+import my.packlol.pagingjawn.presentation.UserVM
 
 @Composable
-fun Navigation(viewModel : BeerVM){
+fun Navigation(viewModelB : BeerVM, viewModelF : UserVM){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.LogScreen.route){
         fadeComposable(route = Screen.LogScreen.route){
-            LoginScreen(viewModel){ screen ->
+            LoginScreen(viewModelB){ screen ->
                 navController.navigate(screen.route)
 
             }
         }
 
         fadeComposable(route = Screen.beerScreen.route){
-            BeerScreen(viewModel.beerPagingFlow.collectAsLazyPagingItems(), viewModel) { screen ->
+            BeerScreen(viewModelB.beerPagingFlow.collectAsLazyPagingItems(), viewModelB) { screen ->
+                navController.navigate(screen.route)
+            }
+        }
+
+        fadeComposable(route = Screen.FavsScreen.route){
+            FavoritesScreen(viewModelF){ screen ->
                 navController.navigate(screen.route)
             }
         }

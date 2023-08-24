@@ -4,6 +4,7 @@ import my.packlol.pagingjawn.data.remote.BeerDto
 import my.packlol.pagingjawn.domain.Beer
 import my.packlol.pagingjawn.domain.SavableBeer
 import my.packlol.pagingjawn.local.BeerEntity
+import my.packlol.pagingjawn.local.Favs
 
 fun BeerDto.toBeerEntity() : BeerEntity{
     return BeerEntity(
@@ -25,5 +26,17 @@ fun BeerEntity.toSavableBeer(saved : Boolean) : SavableBeer {
         firstBrewed = firstBrewed,
         imageUrl = imageUrl,
         saved = saved
+    )
+}
+
+fun BeerEntity.toFav() : Favs{
+    return Favs(
+        id = id,
+        name = name,
+        tagline = tagline,
+        description = description,
+        firstBrewed = firstBrewed,
+        imageUrl = imageUrl
+
     )
 }

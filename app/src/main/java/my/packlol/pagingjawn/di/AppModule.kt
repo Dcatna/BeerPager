@@ -9,6 +9,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import my.packlol.pagingjawn.data.remote.BeerApi
 import my.packlol.pagingjawn.data.remote.BeerRemoteMediator
@@ -17,6 +18,8 @@ import my.packlol.pagingjawn.local.BeerDatabse
 import my.packlol.pagingjawn.local.BeerEntity
 import my.packlol.pagingjawn.local.FavoritesDao
 import my.packlol.pagingjawn.local.Favs
+import my.packlol.pagingjawn.presentation.BeerVM
+import my.packlol.pagingjawn.presentation.UserVM
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
@@ -51,6 +54,29 @@ object AppModule {
     @Provides
     fun provideFavDao(beerdb : BeerDatabse) : FavoritesDao {
         return beerdb.favdao
+    }
+
+    @Singleton
+    @Provides
+    fun provideBeerDao(beerdb : BeerDatabse) : BeerDao {
+        return beerdb.dao
+    }
+
+    @Singleton
+    @Provides
+    fun provideBeerVM(pager : Pager<Int, BeerEntity>,
+                      dao: FavoritesDao,
+                      beerdao : BeerDao) : BeerVM{
+
+        return BeerVM(pager, dao, beerdao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserVM( dao : FavoritesDao,
+                      unsavedDao : BeerDao) : UserVM {
+
+        return UserVM(dao, unsavedDao)
     }
 
     @OptIn(ExperimentalPagingApi::class)

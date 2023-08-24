@@ -10,5 +10,5 @@ data class SavableBeer(
     val description : String,
     val firstBrewed : String,
     val imageUrl : String? = "",
-    val saved : Boolean = false
+    var saved : Boolean = false
 )
