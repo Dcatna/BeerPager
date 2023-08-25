@@ -9,9 +9,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,17 +40,26 @@ import my.packlol.pagingjawn.navigation.Screen
 @Composable
 fun FavoritesScreen(viewModel : UserVM , nav : (Screen)-> Unit) {
     val list = viewModel.favsList.collectAsState()
-    Box() {
-        Column() {
-            favsLazyList(lis = list.value, viewModel, nav)
-        }
-    }
+    Scaffold(
+        topBar = {
+            Button(onClick = {nav(Screen.beerScreen)}) {
+
+            }
+        },
+        content = { padding ->
+            Column(modifier = Modifier.padding(padding)) {
+                favsLazyList(lis = list.value, viewModel, nav)
+            }
+
+        },
+
+    )
 }
 
 @Composable
 fun favsLazyList(lis : List<Favs>, viewModel : UserVM, nav : (Screen)->Unit) {
     LazyColumn(
-        modifier = Modifier.noRippleClickable { nav(Screen.beerScreen) } ,
+        //modifier = Modifier.noRippleClickable { nav(Screen.beerScreen) } ,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         items(lis){beer ->

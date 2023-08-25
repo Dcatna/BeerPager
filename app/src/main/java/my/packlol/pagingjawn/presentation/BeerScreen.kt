@@ -51,7 +51,9 @@ fun BeerScreen(
 
         }else{
             LazyColumn(
-                modifier = Modifier.fillMaxSize().noRippleClickable { nav(Screen.FavsScreen) },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .noRippleClickable { nav(Screen.FavsScreen) },
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
 
