@@ -43,7 +43,7 @@ fun FavoritesScreen(viewModel : UserVM , nav : (Screen)-> Unit) {
     Scaffold(
         topBar = {
             Button(onClick = {nav(Screen.beerScreen)}) {
-
+                Text(text = "BACK")
             }
         },
         content = { padding ->
@@ -64,8 +64,10 @@ fun favsLazyList(lis : List<Favs>, viewModel : UserVM, nav : (Screen)->Unit) {
     ){
         items(lis){beer ->
             FavItem(
+                viewModel::delete,
                 viewModel::save,
-                beer
+                beer,
+                Modifier.fillMaxWidth()
             )
         }
     }

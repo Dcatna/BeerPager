@@ -12,6 +12,7 @@ import my.packlol.pagingjawn.local.BeerDao
 import my.packlol.pagingjawn.local.FavoritesDao
 import my.packlol.pagingjawn.local.Favs
 import my.packlol.pagingjawn.mappers.toFav
+import my.packlol.pagingjawn.mappers.toSavableBeer
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,6 +33,14 @@ class UserVM @Inject constructor(
             withContext(Dispatchers.IO){
                 dao.insertBeer(unsavedDao.getById(id).toFav(true))
 
+            }
+        }
+    }
+
+    fun delete(id: Int){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                dao.deleteBeer(unsavedDao.getById(id).toFav(false))
             }
         }
     }

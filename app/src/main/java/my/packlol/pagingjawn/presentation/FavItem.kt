@@ -27,7 +27,8 @@ import my.packlol.pagingjawn.domain.SavableBeer
 import my.packlol.pagingjawn.local.Favs
 
 @Composable
-fun FavItem(onSaveClick : (Int) -> Unit,
+fun FavItem(deleteOnClick : (Int) -> Unit,
+            onSaveClick : (Int) -> Unit,
             beer : Favs,
             modifier : Modifier = Modifier) {
     val context = LocalContext.current
@@ -58,7 +59,11 @@ fun FavItem(onSaveClick : (Int) -> Unit,
             ) {
                 Button(
                     onClick = {
-                        onSaveClick(beer.id)
+                        if(beer.saved==true){
+                            deleteOnClick(beer.id)
+                        }else {
+                            onSaveClick(beer.id)
+                        }
 
                     }){
                 }
