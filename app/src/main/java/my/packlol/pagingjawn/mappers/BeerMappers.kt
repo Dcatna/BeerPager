@@ -29,14 +29,25 @@ fun BeerEntity.toSavableBeer(saved : Boolean) : SavableBeer {
     )
 }
 
-fun BeerEntity.toFav() : Favs{
+fun Favs.toSavableBeer() : SavableBeer{
+    return SavableBeer(id = id,
+        name = name,
+        tagline = tagline,
+        description = description,
+        firstBrewed = firstBrewed,
+        imageUrl = imageUrl,
+        saved = false
+    )
+}
+
+fun BeerEntity.toFav(saved : Boolean) : Favs{
     return Favs(
         id = id,
         name = name,
         tagline = tagline,
         description = description,
         firstBrewed = firstBrewed,
-        imageUrl = imageUrl
-
+        imageUrl = imageUrl,
+        saved = saved
     )
 }

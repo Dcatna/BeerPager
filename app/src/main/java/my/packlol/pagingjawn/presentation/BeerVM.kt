@@ -34,7 +34,7 @@ class BeerVM @Inject constructor(
     fun save(id : Int){
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                dao.insertBeer(beerdao.getById(id).toFav())
+                dao.insertBeer(beerdao.getById(id).toFav(true))
 
             }
         }

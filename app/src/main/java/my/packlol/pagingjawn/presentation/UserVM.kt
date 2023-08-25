@@ -30,7 +30,7 @@ class UserVM @Inject constructor(
     fun save(id : Int){
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                dao.insertBeer(unsavedDao.getById(id).toFav())
+                dao.insertBeer(unsavedDao.getById(id).toFav(true))
 
             }
         }
