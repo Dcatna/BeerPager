@@ -17,6 +17,9 @@ interface FavoritesDao {
     @Delete
     suspend fun deleteBeer(beer: Favs)
 
+    @Query("SELECT * FROM Favs WHERE name=:name")
+    suspend fun getByName(name : String) : Favs
+
     @Query("Select * FROM Favs")
     fun observeAll(): Flow<List<Favs>>
 

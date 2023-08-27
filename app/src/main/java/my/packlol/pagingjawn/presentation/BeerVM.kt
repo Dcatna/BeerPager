@@ -1,5 +1,6 @@
 package my.packlol.pagingjawn.presentation
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -14,6 +15,7 @@ import kotlinx.coroutines.withContext
 import my.packlol.pagingjawn.local.BeerDao
 import my.packlol.pagingjawn.local.BeerEntity
 import my.packlol.pagingjawn.local.FavoritesDao
+import my.packlol.pagingjawn.local.Favs
 import my.packlol.pagingjawn.mappers.toFav
 import my.packlol.pagingjawn.mappers.toSavableBeer
 import javax.inject.Inject
@@ -30,6 +32,18 @@ class BeerVM @Inject constructor(
                 entity.id == it.id
         }!=null) }
     }
+
+    fun search(name : String) : BeerEntity?{
+        var res = MutableLiveData<BeerEntity>()
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                val data = beerdao.getByName(name)
+                res.value = data
+            }
+        }
+        return res.value
+    }
+
 
     fun save(id : Int){
         viewModelScope.launch {

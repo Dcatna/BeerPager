@@ -1,5 +1,7 @@
 package my.packlol.pagingjawn.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -12,12 +14,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
+import my.packlol.pagingjawn.domain.SavableBeer
 import my.packlol.pagingjawn.presentation.BeerScreen
 import my.packlol.pagingjawn.presentation.BeerVM
 import my.packlol.pagingjawn.presentation.FavoritesScreen
 import my.packlol.pagingjawn.presentation.LoginScreen
+import my.packlol.pagingjawn.presentation.SearchItem
 import my.packlol.pagingjawn.presentation.UserVM
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun Navigation(viewModelB : BeerVM, viewModelF : UserVM){
     val navController = rememberNavController()
@@ -40,6 +45,7 @@ fun Navigation(viewModelB : BeerVM, viewModelF : UserVM){
                 navController.navigate(screen.route)
             }
         }
+
     }
 
 }

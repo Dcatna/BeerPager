@@ -1,8 +1,10 @@
 package my.packlol.pagingjawn
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -20,6 +22,7 @@ import my.packlol.pagingjawn.ui.theme.PagingJawnTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -32,7 +35,8 @@ class MainActivity : ComponentActivity() {
                     val viewModel = hiltViewModel<BeerVM>()
                     val viewModelf = hiltViewModel<UserVM>()
 
-                    val beers = viewModel.beerPagingFlow.collectAsLazyPagingItems()
+                    //val beers = viewModel.beerPagingFlow.collectAsLazyPagingItems()
+
                     Navigation(viewModel, viewModelf)
                 }
             }
