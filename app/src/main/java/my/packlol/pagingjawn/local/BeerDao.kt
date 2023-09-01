@@ -11,9 +11,6 @@ interface BeerDao {
     @Upsert
     suspend fun upsertAll(beers : List<BeerEntity>)
 
-    @Upsert
-    suspend fun upsertSearched(beers : List<SavableBeer>)
-
     @Query("SELECT * FROM beerentity")
     fun pagingSource() : PagingSource<Int, BeerEntity>
 

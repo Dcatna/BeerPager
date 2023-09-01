@@ -1,6 +1,8 @@
 package my.packlol.pagingjawn.presentation
 
 import android.os.Build
+import android.provider.Settings
+import android.util.Log
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -47,7 +49,9 @@ import my.packlol.pagingjawn.navigation.Screen
 fun BeerScreen(
     beers : LazyPagingItems<SavableBeer>,
     viewModel: BeerVM,
+    searchVM : SearchVM,
     nav : (Screen) -> Unit
+
 ) {
 
     //errors ina toast
@@ -55,6 +59,7 @@ fun BeerScreen(
 
     LaunchedEffect(key1 = beers.loadState){
         if (beers.loadState.refresh is LoadState.Error){
+            println((beers.loadState.refresh as LoadState.Error).error.message)
             Toast.makeText(context,
                 "Error" + (beers.loadState.refresh as LoadState.Error).error.message,
                 Toast.LENGTH_LONG).show()
@@ -77,16 +82,19 @@ fun BeerScreen(
                             value = text,
                             onValueChange = { 
                                 text = it
-                               // viewModel.search(it)!!.toSavableBeer(false))
                                 },
+
 
                             modifier = Modifier
                                 .weight(3f)
-                                .fillMaxWidth()
-
+                                .fillMaxWidth(),
 
                         )
+                        Button(onClick = {
+                            searchVM.createSearch(text)
+                            nav(Screen.SearchScreen) }) {
 
+                        }
                         Button(
                             onClick = {nav(Screen.FavsScreen)},
                             modifier = Modifier.weight(1.5f)

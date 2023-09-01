@@ -20,11 +20,13 @@ import my.packlol.pagingjawn.presentation.BeerVM
 import my.packlol.pagingjawn.presentation.FavoritesScreen
 import my.packlol.pagingjawn.presentation.LoginScreen
 import my.packlol.pagingjawn.presentation.SearchItem
+import my.packlol.pagingjawn.presentation.SearchScreen
+import my.packlol.pagingjawn.presentation.SearchVM
 import my.packlol.pagingjawn.presentation.UserVM
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
-fun Navigation(viewModelB : BeerVM, viewModelF : UserVM){
+fun Navigation(viewModelB : BeerVM, viewModelF : UserVM, viewModelSearchVM: SearchVM){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.LogScreen.route){
         fadeComposable(route = Screen.LogScreen.route){
@@ -35,7 +37,7 @@ fun Navigation(viewModelB : BeerVM, viewModelF : UserVM){
         }
 
         fadeComposable(route = Screen.beerScreen.route){
-            BeerScreen(viewModelB.beerPagingFlow.collectAsLazyPagingItems(), viewModelB) { screen ->
+            BeerScreen(viewModelB.beerPagingFlow.collectAsLazyPagingItems(), viewModelB, viewModelSearchVM) { screen ->
                 navController.navigate(screen.route)
             }
         }
@@ -45,6 +47,15 @@ fun Navigation(viewModelB : BeerVM, viewModelF : UserVM){
                 navController.navigate(screen.route)
             }
         }
+
+        fadeComposable(route = Screen.SearchScreen.route){
+            SearchScreen(searchVM = viewModelSearchVM, userVM = viewModelF, text = ""){ screen ->
+                navController.navigate(screen.route)
+
+            }
+        }
+
+
 
     }
 

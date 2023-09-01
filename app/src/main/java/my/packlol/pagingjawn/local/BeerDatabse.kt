@@ -12,4 +12,5 @@ abstract class BeerDatabse : RoomDatabase(){
 
     abstract val favdao : FavoritesDao
     abstract val dao : BeerDao
+    abstract  val searchdao : SearchDao
 }

@@ -17,6 +17,7 @@ import my.packlol.pagingjawn.local.FavoritesDao
 import my.packlol.pagingjawn.navigation.Navigation
 import my.packlol.pagingjawn.presentation.BeerScreen
 import my.packlol.pagingjawn.presentation.BeerVM
+import my.packlol.pagingjawn.presentation.SearchVM
 import my.packlol.pagingjawn.presentation.UserVM
 import my.packlol.pagingjawn.ui.theme.PagingJawnTheme
 
@@ -34,10 +35,11 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val viewModel = hiltViewModel<BeerVM>()
                     val viewModelf = hiltViewModel<UserVM>()
+                    val viewModelSearch = hiltViewModel<SearchVM>()
 
                     //val beers = viewModel.beerPagingFlow.collectAsLazyPagingItems()
 
-                    Navigation(viewModel, viewModelf)
+                    Navigation(viewModel, viewModelf, viewModelSearch)
                 }
             }
         }

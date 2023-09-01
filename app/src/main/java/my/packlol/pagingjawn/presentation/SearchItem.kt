@@ -34,12 +34,9 @@ fun SearchItem(
     onSaveClick : (Int) -> Unit,
     beer : SavableBeer,
     modifier : Modifier = Modifier,
-    nav : (Screen) -> Unit
     ) {
         val context = LocalContext.current
-        Button(onClick = {nav(Screen.beerScreen)}) {
-            
-        }
+
         Card(
             modifier = Modifier,
             elevation = 4.dp

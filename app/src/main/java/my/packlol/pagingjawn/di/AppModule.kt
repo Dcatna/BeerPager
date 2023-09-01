@@ -18,7 +18,9 @@ import my.packlol.pagingjawn.local.BeerDatabse
 import my.packlol.pagingjawn.local.BeerEntity
 import my.packlol.pagingjawn.local.FavoritesDao
 import my.packlol.pagingjawn.local.Favs
+import my.packlol.pagingjawn.local.SearchDao
 import my.packlol.pagingjawn.presentation.BeerVM
+import my.packlol.pagingjawn.presentation.SearchVM
 import my.packlol.pagingjawn.presentation.UserVM
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -64,11 +66,27 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideSearchDao(beerdb : BeerDatabse) : SearchDao{
+        return beerdb.searchdao
+    }
+
+    @Singleton
+    @Provides
     fun provideBeerVM(pager : Pager<Int, BeerEntity>,
                       dao: FavoritesDao,
                       beerdao : BeerDao) : BeerVM{
 
         return BeerVM(pager, dao, beerdao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSearchVM(
+        beerdao: BeerDao,
+        favsdao : FavoritesDao,
+        searchdao : SearchDao
+    ) : SearchVM{
+        return SearchVM(beerdao, favsdao, searchdao)
     }
 
     @Singleton
