@@ -11,4 +11,13 @@ data class SavableBeer(
     val firstBrewed : String,
     val imageUrl : String? = "",
     var saved : Boolean = false
-)
+){
+    fun doesMatchSearchQuery(query: String) : Boolean{
+        val matchingCombos = listOf(
+            "$id"
+        )
+        return matchingCombos.any{
+            it.contains(query, ignoreCase = true)
+        }
+    }
+}

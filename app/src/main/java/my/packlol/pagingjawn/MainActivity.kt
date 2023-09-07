@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     val viewModelf = hiltViewModel<UserVM>()
                     val viewModelSearch = hiltViewModel<SearchVM>()
 
-                    //val beers = viewModel.beerPagingFlow.collectAsLazyPagingItems()
+                    val beers = viewModel.beerPagingFlow.collectAsLazyPagingItems()
 
                     Navigation(viewModel, viewModelf, viewModelSearch)
                 }

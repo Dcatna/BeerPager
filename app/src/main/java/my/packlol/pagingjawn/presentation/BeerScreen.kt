@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.IconButton
@@ -24,6 +25,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,8 +40,11 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import my.packlol.pagingjawn.domain.Beer
 import my.packlol.pagingjawn.domain.SavableBeer
+import my.packlol.pagingjawn.local.BeerEntity
 import my.packlol.pagingjawn.mappers.toSavableBeer
 import my.packlol.pagingjawn.navigation.Navigation
 import my.packlol.pagingjawn.navigation.Screen
@@ -48,7 +53,7 @@ import my.packlol.pagingjawn.navigation.Screen
 @Composable
 fun BeerScreen(
     beers : LazyPagingItems<SavableBeer>,
-    viewModel: BeerVM,
+    viewModelB: BeerVM,
     searchVM : SearchVM,
     nav : (Screen) -> Unit
 
@@ -73,25 +78,32 @@ fun BeerScreen(
             )
 
         }else{
-            var text by remember { mutableStateOf("")}
+            var text by remember{ mutableStateOf("") }
+            val viewModel = searchVM
+            val searchText by viewModel.searchText.collectAsState()
+            val searchBeers by viewModel.beers.collectAsState()
+            val isSearching by viewModel.isSearching.collectAsState()
+
 
             Scaffold(
                 topBar = {
                     Row() {
                         TextField(
-                            value = text,
-                            onValueChange = { 
-                                text = it
-                                },
+                            value = searchText,
+                            onValueChange =
+                            viewModel::onSearchTextChanged,
+
+
 
 
                             modifier = Modifier
                                 .weight(3f)
                                 .fillMaxWidth(),
+                            placeholder = {Text(text = "Search")}
 
                         )
                         Button(onClick = {
-                            searchVM.createSearch(text)
+                            //searchVM.makeSearch(text)
                             nav(Screen.SearchScreen) }) {
 
                         }
@@ -107,34 +119,50 @@ fun BeerScreen(
 
 
                 },
-                content = { padding->
-                    LazyColumn(
-                        modifier = Modifier
+                content = { padding ->
+                    if (searchText.isBlank()) {
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(padding),
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+
+
+                            ) {
+                            items(beers) { beer ->
+                                if (beer != null) {
+                                    BeerItem(
+                                        beer = beer,
+                                        modifier = Modifier.fillMaxWidth(),
+                                        onSaveClick = viewModelB::save
+
+                                    )
+                                }
+
+                            }
+                            item {
+                                if (beers.loadState.append is LoadState.Loading) {
+                                    CircularProgressIndicator()
+                                }
+                            }
+                        }
+                    }else{
+
+                        LazyColumn(modifier = Modifier
                             .fillMaxSize()
                             .padding(padding),
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-
-
-                        ){
-                        items(beers) { beer->
-                            if(beer!=null) {
-                                BeerItem(
-                                    beer = beer,
-                                    modifier = Modifier.fillMaxWidth(),
-                                    onSaveClick = viewModel::save
-
-                                )
-                            }
-
-                        }
-                        item{
-                            if(beers.loadState.append is LoadState.Loading) {
-                                CircularProgressIndicator()
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                            ){
+                            items(searchBeers){beer ->
+                                BeerItem(onSaveClick = viewModelB::save, beer = beer)
                             }
                         }
+
                     }
-                }
+
+            }
 
             )
         }
@@ -153,3 +181,5 @@ fun BeerScreen(
 
     }
 }
+
+

@@ -14,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import kotlinx.coroutines.flow.StateFlow
+import my.packlol.pagingjawn.domain.SavableBeer
 import my.packlol.pagingjawn.local.BeerEntity
 import my.packlol.pagingjawn.local.Favs
 import my.packlol.pagingjawn.mappers.toSavableBeer
@@ -28,7 +30,7 @@ fun SearchScreen(
     nav : (Screen) -> Unit
 
 ) {
-    val searchList = searchVM.createSearch(text)
+
 
     Scaffold(
         topBar = {
@@ -38,7 +40,7 @@ fun SearchScreen(
         },
         content = { padding ->
             Column(modifier = Modifier.padding(padding)) {
-                SearchLazyList(lis = searchList, userVM)
+                SearchLazyList(lis = listOf(), userVM)
             }
 
         },

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.cachedIn
+import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +34,7 @@ class BeerVM @Inject constructor(
         }!=null) }
     }
 
+    val er = beerPagingFlow
     fun search(name : String) : BeerEntity?{
         var res = MutableLiveData<BeerEntity>()
         viewModelScope.launch {

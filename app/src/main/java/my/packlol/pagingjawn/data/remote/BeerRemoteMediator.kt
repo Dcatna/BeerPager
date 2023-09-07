@@ -11,6 +11,7 @@ import my.packlol.pagingjawn.local.Favs
 import my.packlol.pagingjawn.mappers.toBeerEntity
 import retrofit2.HttpException
 import java.io.IOException
+import java.lang.Exception
 
 @OptIn(ExperimentalPagingApi::class)
 class BeerRemoteMediator(
@@ -47,11 +48,11 @@ class BeerRemoteMediator(
             )
 
             beerDb.withTransaction {
-                if(loadType== LoadType.REFRESH){
+                if (loadType == LoadType.REFRESH) {
                     beerDb.dao.clearAll()
                 }
 
-                val beerEntities = beers.map{it.toBeerEntity()}
+                val beerEntities = beers.map { it.toBeerEntity() }
 
 
                 beerDb.dao.upsertAll(beerEntities)
@@ -60,6 +61,10 @@ class BeerRemoteMediator(
             MediatorResult.Success(
                 endOfPaginationReached = beers.isEmpty()
             )
+
+        } catch (e : Exception){
+            e.printStackTrace()
+            MediatorResult.Error(e)
         } catch(e: IOException){
             MediatorResult.Error(e)
         } catch (e: HttpException){

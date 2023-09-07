@@ -49,7 +49,7 @@ fun Navigation(viewModelB : BeerVM, viewModelF : UserVM, viewModelSearchVM: Sear
         }
 
         fadeComposable(route = Screen.SearchScreen.route){
-            SearchScreen(searchVM = viewModelSearchVM, userVM = viewModelF, text = ""){ screen ->
+            SearchScreen(searchVM = viewModelSearchVM, userVM = viewModelF, ""){ screen ->
                 navController.navigate(screen.route)
 
             }

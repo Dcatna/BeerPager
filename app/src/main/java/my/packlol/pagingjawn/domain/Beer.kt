@@ -9,5 +9,12 @@ class Beer(
     val image_url : String?
 ) {
 
-
+    fun doesMatchSearchQuery(query: String) : Boolean{
+        val matchingCombos = listOf(
+            "$id"
+        )
+        return matchingCombos.any{
+            it.contains(query, ignoreCase = true)
+        }
+    }
 }
